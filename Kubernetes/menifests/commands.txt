@@ -1,0 +1,18 @@
+minikube status
+minikube start
+minikubse stop
+
+kubectl apply -f <file_name>
+kuebctl delete -f <file_name>
+
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods --show-labels
+kubectl get pods -l app=nginx
+kubectl describe pod <pod_name>
+
+kubectl get deploy
+kubectl get svc
+
+kubectl proxy
+kubectl port-forward svc/<service_name> 8080:80
