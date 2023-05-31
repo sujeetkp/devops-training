@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  jenkins:
+    image: sujeetkp:jenkins
+    volumes:
+      - /home/demo/jenkins:/var/jenkins_home
+      - /var/jenkins_home/.ssh
+    restart: always
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - net
+  ssh-agent:
+    image: sujeetkp/centos-ssh
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    restart: always
+    privileged: true
+    networks:
+      - net
+
+networks:
+  net:

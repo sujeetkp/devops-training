@@ -1,0 +1,5 @@
+FROM jenkins/jenkins:lts-jdk11
+
+RUN mkdir -p /var/jenkins_home/.ssh
+
+COPY ssh-keys/ /var/jenkins_home/.ssh/
