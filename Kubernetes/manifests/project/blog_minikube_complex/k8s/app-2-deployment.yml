@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-2
+  template:
+    metadata:
+      labels:
+        app: app-2
+    spec:
+      containers:
+      - name: htmlapp
+        image: sujeetkp/htmlapp:1.0
+        resources:
+          limits:
+            memory: "256M"
+            cpu: "0.5"
+        ports:
+        - containerPort: 80

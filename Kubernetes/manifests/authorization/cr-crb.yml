@@ -1,0 +1,54 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: secret-reader
+rules:
+- apiGroups: [""]
+  #
+  # at the HTTP level, the name of the resource for accessing Secret
+  # objects is "secrets"
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+kind: ClusterRoleBinding
+metadata:
+  name: read-secrets-global
+subjects:
+- kind: User
+  name: Dave@sumeetkp0201gmail.onmicrosoft.com   # Object ID from different tenant - 7bcc329e-88a9-4c45-bc97-6f363ee6f5a3
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: manager # Name is case sensitive # Object ID of AAD groups
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: secret-reader
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+# This role binding allows "jane" to read pods in the "default" namespace.
+# You need to already have a Role named "pod-reader" in that namespace.
+kind: RoleBinding
+metadata:
+  name: read-pods-aad
+  namespace: default
+subjects:
+# You can specify more than one "subject"
+- kind: User
+  name: Dave@sumeetkp0201gmail.onmicrosoft.com   # Object ID from different tenant - 7bcc329e-88a9-4c45-bc97-6f363ee6f5a3
+  apiGroup: rbac.authorization.k8s.io
+- kind: Group
+  name: 462b2fad-0405-4b37-8abb-bd68e4b6cda7   # Group Object ID
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  # "roleRef" specifies the binding to a Role / ClusterRole
+  kind: ClusterRole #this must be Role or ClusterRole
+  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  apiGroup: rbac.authorization.k8s.io
