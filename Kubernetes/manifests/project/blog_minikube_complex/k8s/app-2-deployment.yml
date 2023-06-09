@@ -17,7 +17,7 @@ spec:
         image: sujeetkp/htmlapp:1.0
         resources:
           limits:
-            memory: "256M"
-            cpu: "0.5"
+            memory: "128M"
+            cpu: "0.2"
         ports:
         - containerPort: 80
