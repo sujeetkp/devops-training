@@ -12,7 +12,7 @@ services:
     networks:
       - net
   ssh-agent:
-    image: sujeetkp/ssh-agent
+    image: sujeetkp/centos-ssh-agent
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     restart: always
