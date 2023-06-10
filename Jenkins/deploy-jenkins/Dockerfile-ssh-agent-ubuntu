@@ -1,18 +1,55 @@
 FROM jrei/systemd-ubuntu
 
 RUN apt-get update && \
-    apt-get install -y openssh-server
+    apt-get install -y openssh-server sudo nano openssl certmonger git openjdk-11-jdk && \
+    systemctl enable sshd.service
 
-RUN useradd remote_user && \
-    echo "remote_user:1234" | chpasswd && \
-    mkdir /home/remote_user/.ssh -p && \
-    chmod 700 /home/remote_user/.ssh && \
-    mkdir -p -m0755 /var/run/sshd
+# Enable root and pos accounts
+RUN echo 'root:Welcome@123' | chpasswd
+RUN adduser pos && \
+	echo 'pos:Welcome@123' | chpasswd && \
+	usermod -aG wheel pos
+RUN adduser jenkins && \
+	echo 'jenkins:Welcome@123' | chpasswd && \
+	usermod -aG wheel jenkins
 
-COPY remote-key.pub /home/remote_user/.ssh/authorized_keys
+# Configure SSHD
+RUN mkdir -p /var/run/sshd ; chmod -rx /var/run/sshd
 
-RUN chown remote_user:remote_user   -R /home/remote_user && \
-    chmod 400 /home/remote_user/.ssh/authorized_keys
+# http://stackoverflow.com/questions/2419412/ssh-connection-stop-at-debug1-ssh2-msg-kexinit-sent
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 
-# CMD /usr/sbin/sshd -D
+# Bad security, add a user and sudo instead!
+RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
+
+# http://stackoverflow.com/questions/18173889/cannot-access-centos-sshd-on-docker
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+
+RUN mkdir /root/.ssh/
+COPY ssh-keys/id_rsa.pub /root/.ssh/authorized_keys
+RUN chmod 700 /root/.ssh && \
+	chmod 600 /root/.ssh/authorized_keys
+
+# Deploy ssh keys for pos
+RUN mkdir /home/pos/.ssh/
+COPY ssh-keys/id_rsa.pub /home/pos/.ssh/authorized_keys
+RUN	chmod 700 /home/pos/.ssh && \
+	chmod 600 /home/pos/.ssh/authorized_keys && \
+	chown -R pos:pos /home/pos/.ssh/
+
+# Deploy ssh keys for jenkins
+RUN mkdir /home/jenkins/.ssh/
+COPY ssh-keys/id_rsa.pub /home/jenkins/.ssh/authorized_keys
+RUN	chmod 700 /home/jenkins/.ssh && \
+	chmod 600 /home/jenkins/.ssh/authorized_keys && \
+	chown -R jenkins:jenkins /home/jenkins/.ssh/
+
+
+# Configure pos and jenkins
+RUN bash -c 'echo "pos ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
+RUN bash -c 'echo "jenkins ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
+
+EXPOSE 22
+
 CMD ["/lib/systemd/systemd"]
