@@ -6,10 +6,10 @@ RUN apt-get update && \
 
 # Enable root and pos accounts
 RUN echo 'root:Welcome@123' | chpasswd
-RUN useradd pos && \
+RUN adduser --disabled-login --home /home/pos --gecos "" pos && \
 	echo 'pos:Welcome@123' | chpasswd && \
 	usermod -aG sudo pos
-RUN useradd jenkins && \
+RUN adduser --disabled-login --home /home/jenkins --gecos "" jenkins && \
 	echo 'jenkins:Welcome@123' | chpasswd && \
 	usermod -aG sudo jenkins
 
