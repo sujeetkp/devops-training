@@ -2,22 +2,19 @@ FROM jrei/systemd-ubuntu
 
 RUN apt-get update && \
     apt-get install -y openssh-server sudo nano openssl certmonger git openjdk-11-jdk && \
-    systemctl enable sshd.service
+    systemctl enable ssh
 
 # Enable root and pos accounts
 RUN echo 'root:Welcome@123' | chpasswd
-RUN adduser pos && \
+RUN useradd pos && \
 	echo 'pos:Welcome@123' | chpasswd && \
-	usermod -aG wheel pos
-RUN adduser jenkins && \
+	usermod -aG sudo pos
+RUN useradd jenkins && \
 	echo 'jenkins:Welcome@123' | chpasswd && \
-	usermod -aG wheel jenkins
+	usermod -aG sudo jenkins
 
 # Configure SSHD
 RUN mkdir -p /var/run/sshd ; chmod -rx /var/run/sshd
-
-# http://stackoverflow.com/questions/2419412/ssh-connection-stop-at-debug1-ssh2-msg-kexinit-sent
-RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 
 # Bad security, add a user and sudo instead!
 RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config

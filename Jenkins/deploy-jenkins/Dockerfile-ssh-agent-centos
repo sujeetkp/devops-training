@@ -3,7 +3,8 @@ FROM centos/systemd
 RUN yum -y remove java***
 
 # Install packages
-RUN yum -y install openssh-server sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git && \
+RUN yum update -y && \
+	yum -y install openssh-server sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git && \
 	systemctl enable sshd.service
 
 # Enable root and pos accounts
