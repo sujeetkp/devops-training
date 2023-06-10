@@ -29,9 +29,9 @@ RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
 
 # Deploy ssh keys for root
 RUN mkdir /root/.ssh/
-COPY ssh-keys/id_rsa.pub ~/.ssh/authorized_keys
-RUN chmod 700 ~/.ssh && \
-	chmod 600 ~/.ssh/authorized_keys
+COPY ssh-keys/id_rsa.pub /root/.ssh/authorized_keys
+RUN chmod 700 /root/.ssh && \
+	chmod 600 /root/.ssh/authorized_keys
 
 # Deploy ssh keys for pos
 RUN mkdir /home/pos/.ssh/
