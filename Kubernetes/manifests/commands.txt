@@ -16,3 +16,7 @@ kubectl get svc
 
 kubectl proxy
 kubectl port-forward svc/<service_name> 8080:80
+
+kubectl config get-contexts
+kubectl config current-context
+kubectl config use-context <context-name>
