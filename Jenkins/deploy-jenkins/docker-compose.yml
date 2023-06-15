@@ -4,6 +4,7 @@ services:
     image: sujeetkp/jenkins
     volumes:
       - /home/demo/jenkins:/var/jenkins_home
+      - /var/jenkins_home/.ssh
     restart: always
     ports:
       - "8080:8080"

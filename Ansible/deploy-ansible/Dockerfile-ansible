@@ -4,7 +4,7 @@ RUN yum -y remove java***
 
 # Install packages
 RUN yum update -y && \
-	yum -y install openssh-server sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git python3 ansible && \
+	yum -y install openssh-server vim sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git python3 && \
 	systemctl enable sshd.service
 
 # Enable root and pos accounts
@@ -55,6 +55,7 @@ RUN	chmod 700 /home/jenkins/.ssh && \
 # Deploy ssh keys for ansible
 RUN mkdir /home/ansible/.ssh/
 COPY ssh-keys/id_rsa.pub /home/ansible/.ssh/authorized_keys
+COPY ssh-keys/ /home/ansible/.ssh/
 RUN	chmod 700 /home/ansible/.ssh && \
 	chmod 600 /home/ansible/.ssh/authorized_keys && \
 	chown -R ansible:ansible /home/ansible/.ssh/
@@ -63,6 +64,10 @@ RUN	chmod 700 /home/ansible/.ssh && \
 RUN bash -c 'echo "pos ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "jenkins ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "ansible ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
+
+RUN echo 'export PS1="[$(whoami)@$(hostname)]$ "' >> /etc/profile.d/custom_ps1.sh
+
+RUN yum install -y ansible && chown -R ansible:ansible /etc/ansible
 
 EXPOSE 22
 

@@ -1,7 +1,7 @@
 FROM jrei/systemd-ubuntu
 
 RUN apt-get update && \
-    apt-get install -y openssh-server sudo nano openssl certmonger git openjdk-11-jdk python3.8 && \
+    apt-get install -y openssh-server vim sudo nano openssl certmonger git openjdk-11-jdk python3.8 && \
     systemctl enable ssh
 
 # Enable root and pos accounts
@@ -56,6 +56,8 @@ RUN	chmod 700 /home/ansible/.ssh && \
 RUN bash -c 'echo "pos ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "jenkins ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "ansible ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
+
+RUN echo 'export PS1="[$(whoami)@$(hostname)]$ "' >> /etc/profile.d/custom_ps1.sh
 
 EXPOSE 22
 
