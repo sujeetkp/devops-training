@@ -4,7 +4,7 @@ RUN yum -y remove java***
 
 # Install packages
 RUN yum update -y && \
-	yum -y install openssh-server sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git python3 && \
+	yum -y install openssh-server sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git python3 ansible && \
 	systemctl enable sshd.service
 
 # Enable root and pos accounts
