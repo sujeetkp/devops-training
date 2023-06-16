@@ -1,23 +1,29 @@
-FROM jrei/systemd-ubuntu
+FROM centos/systemd
 
-RUN apt-get update && \
-    apt-get install -y openssh-server vim sudo nano openssl certmonger git openjdk-11-jdk python3.8 && \
-    systemctl enable ssh
+RUN yum -y remove java***
+
+# Install packages
+RUN yum update -y && \
+	yum -y install openssh-server vim sudo nano epel-release openssl certmonger java-11-openjdk-devel.x86_64 1:11.0.19.0.7-1.el7_9 git python3 && \
+	systemctl enable sshd.service
 
 # Enable root and pos accounts
 RUN echo 'root:Welcome@123' | chpasswd
-RUN adduser --disabled-login --home /home/pos --gecos "" pos && \
+RUN adduser pos && \
 	echo 'pos:Welcome@123' | chpasswd && \
-	usermod -aG sudo pos
-RUN adduser --disabled-login --home /home/jenkins --gecos "" jenkins && \
+	usermod -aG wheel pos
+RUN adduser jenkins && \
 	echo 'jenkins:Welcome@123' | chpasswd && \
-	usermod -aG sudo jenkins
-RUN adduser --disabled-login --home /home/ansible --gecos "" ansible && \
+	usermod -aG wheel jenkins
+RUN adduser ansible && \
 	echo 'ansible:Welcome@123' | chpasswd && \
-	usermod -aG sudo ansible
+	usermod -aG wheel ansible
 
 # Configure SSHD
 RUN mkdir -p /var/run/sshd ; chmod -rx /var/run/sshd
+
+# http://stackoverflow.com/questions/2419412/ssh-connection-stop-at-debug1-ssh2-msg-kexinit-sent
+RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key
 
 # Bad security, add a user and sudo instead!
 RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -26,6 +32,7 @@ RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config
 RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
 
+# Deploy ssh keys for root
 RUN mkdir /root/.ssh/
 COPY ssh-keys/id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 700 /root/.ssh && \
@@ -48,6 +55,7 @@ RUN	chmod 700 /home/jenkins/.ssh && \
 # Deploy ssh keys for ansible
 RUN mkdir /home/ansible/.ssh/
 COPY ssh-keys/id_rsa.pub /home/ansible/.ssh/authorized_keys
+COPY ssh-keys/ /home/ansible/.ssh/
 RUN	chmod 700 /home/ansible/.ssh && \
 	chmod 600 /home/ansible/.ssh/authorized_keys && \
 	chown -R ansible:ansible /home/ansible/.ssh/
@@ -59,6 +67,8 @@ RUN bash -c 'echo "ansible ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visud
 
 RUN echo 'export PS1="[$(whoami)@$(hostname)]$ "' >> /etc/profile.d/custom_ps1.sh
 
+RUN yum install -y ansible && chown -R ansible:ansible /etc/ansible
+
 EXPOSE 22
 
-CMD ["/lib/systemd/systemd"]
+CMD ["/usr/sbin/init"]

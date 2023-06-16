@@ -1,0 +1,97 @@
+version: '3.8' # if no version is specificed then v1 is assumed. Recommend v2 minimum
+
+services:
+  centos-c:
+    hostname: centos-c
+    container_name: centos-c
+    image: sujeetkp/centos-ansible
+    ports: 
+     - ${CENTOSC_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+  ubuntu1:
+    hostname: ubuntu1
+    container_name: ubuntu1
+    image: sujeetkp/ubuntu-ssh-agent
+    ports: 
+     - ${UBUNTU1_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+  ubuntu2:
+    hostname: ubuntu2
+    container_name: ubuntu2
+    image: sujeetkp/ubuntu-ssh-agent
+    ports: 
+     - ${UBUNTU2_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+  ubuntu3:
+    hostname: ubuntu3
+    container_name: ubuntu3
+    image: sujeetkp/ubuntu-ssh-agent
+    ports: 
+     - ${UBUNTU3_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+  centos1:
+    hostname: centos1
+    container_name: centos1
+    image: sujeetkp/centos-ssh-agent
+    ports: 
+     - ${CENTOS1_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+  centos2:
+    hostname: centos2
+    container_name: centos2
+    image: sujeetkp/centos-ssh-agent
+    ports: 
+     - ${CENTOS2_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+  centos3:
+    hostname: centos3
+    container_name: centos3
+    image: sujeetkp/centos-ssh-agent
+    ports: 
+     - ${CENTOS3_PORT_SSHD}:22
+    privileged: true
+    volumes:
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - ${ANSIBLE_HOME}/shared:/shared
+    networks:
+     - ansible
+
+networks:
+  ansible:
+    name: ansible
