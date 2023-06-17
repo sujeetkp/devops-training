@@ -1,0 +1,38 @@
+docker ps
+docker ps -a
+
+docker logs <container_id>
+docker logs -f <container_id>
+
+docker run <image_name>
+docker run -d <image_name>
+docker run -d -p <host_port>:<container_port> <image_name>
+docker run -d -v <vol_name>:<container_path> <image_name>
+docker run -d -v <localhost_path>:<container_path> <image_name>
+docker exec -ti <container_id> bash/sh
+
+docker inspect <container_id/volume_id/image_id> 
+
+docker system prune
+docker system prune -a
+
+docker stop <container_id>
+docker kill <container_id>
+docker rm <container_id>
+
+docker images
+docker image rm <image_id>
+docker rmi <image_id>
+
+docker volume ls
+docker volume create <vol_name>
+docker volume rm <vol_name>
+
+docker network ls
+docker network create <network_name>
+docker network rm <network_name>
+
+docker-compose up
+docker-compose up -d
+docker-compose down
+docker-compose stop

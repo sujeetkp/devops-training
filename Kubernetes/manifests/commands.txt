@@ -10,6 +10,10 @@ kubectl get pods -o wide
 kubectl get pods --show-labels
 kubectl get pods -l app=nginx
 kubectl describe pod <pod_name>
+kubectl logs -f <pod_name>
+kubectl logs -f -c <container_name> <pod_name>
+kubectl exec -ti <pod_name> -- bash
+kubectl exec -ti -c <container_name> <pod_name> -- bash
 
 kubectl get deploy
 kubectl get svc
@@ -20,3 +24,16 @@ kubectl port-forward svc/<service_name> 8080:80
 kubectl config get-contexts
 kubectl config current-context
 kubectl config use-context <context-name>
+
+kubectl get pv
+kubectl get pvc
+kubectl describe pv <pv_name>
+kubectl describe pvc <pvc_name>
+kubectl get sc
+kubectl describe sc <sc_name>
+
+kubectlkubectl get cm
+kubectl describe cm <cm_name>
+
+kubectlkubectl get secrets
+kubectl describe secret <secret_name>
