@@ -1,21 +1,3 @@
-# By default the Dynamic PVs are created in the AKS Node Resource Group. You must provide the RG name explicitly if you want the PVs created
-# in a different RG.
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: premium-disk-cm
-parameters:
-  skuname: Premium_LRS
-  kind: Managed
-  subscriptionID: 29f4fd39-55c5-46f0-9e75-d9d16df4f544
-  resourceGroup: disks-k8s
-provisioner: kubernetes.io/azure-disk
-reclaimPolicy: Retain
-volumeBindingMode: Immediate
-allowVolumeExpansion: true
-
----
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -26,7 +8,6 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: premium-disk-cm
   volumeMode: Filesystem
 
 ---
