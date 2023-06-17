@@ -8,13 +8,20 @@ docker run <image_name>
 docker run -d <image_name>
 docker run -d -p <host_port>:<container_port> <image_name>
 docker run -d -v <vol_name>:<container_path> <image_name>
+docker run -d -ti -v demo:/shared alpine
 docker run -d -v <localhost_path>:<container_path> <image_name>
+docker run -d -p 8080:80 -v /home/azureuser/devops-training/Docker/apache:/var/www/html sujeetkp/apache-local
+docker run -d -e <environment_var_name>:<value> <image_name>
 docker exec -ti <container_id> bash/sh
 
 docker inspect <container_id/volume_id/image_id> 
 
 docker system prune
 docker system prune -a
+docker kill $(docker ps -q)
+docker rm $(docker ps -q -a)
+docker rmi $(docker images -q)
+docker volume rm $(docker volume ls -q)
 
 docker stop <container_id>
 docker kill <container_id>
