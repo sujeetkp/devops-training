@@ -12,8 +12,8 @@ spec:
     - ReadWriteOnce
   azureDisk:
     cachingMode: ReadWrite
-    diskName: myAKSDiskPrem
-    diskURI: /subscriptions/29f4fd39-55c5-46f0-9e75-d9d16df4f544/resourceGroups/Disks/providers/Microsoft.Compute/disks/myAKSDiskPrem
+    diskName: demo
+    diskURI: /subscriptions/29f4fd39-55c5-46f0-9e75-d9d16df4f544/resourceGroups/MC_Training_demo_centralindia/providers/Microsoft.Compute/disks/demo
     kind: Managed
     readOnly: false
   claimRef:
