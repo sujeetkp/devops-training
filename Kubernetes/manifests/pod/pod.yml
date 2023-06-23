@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: nginx
+  #namespace: <your_namespace_name>
+  #annotations: <Fill_In_Anootations>
   labels:
     app: nginx
     version: "1.14.2"
