@@ -18,7 +18,7 @@ provider "azurerm" {
  features {}          
 }
 
-/*
+
 // depends_on and count
 resource "azurerm_resource_group" "my_first_rg" {
   #count = 3
@@ -40,7 +40,7 @@ resource "random_string" "myrandom" {
   special = false
   numeric = false   
 }
-*/
+
 
 /*
 //for_each wih set

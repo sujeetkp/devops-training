@@ -29,7 +29,7 @@ kind: Service
 metadata:
   name: nginx-svc
 spec:
-  type: NodePort
+  type: NodePort  # 30000-32767
   selector:
     app: nginx
   ports:
