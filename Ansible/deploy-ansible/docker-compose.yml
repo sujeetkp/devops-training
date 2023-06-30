@@ -11,6 +11,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/centos-c:/home/ansible/code
     networks:
      - ansible
 
@@ -24,6 +25,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/ubuntu1:/home/ansible/code
     networks:
      - ansible
 
@@ -37,6 +39,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/ubuntu2:/home/ansible/code
     networks:
      - ansible
 
@@ -50,6 +53,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/ubuntu3:/home/ansible/code
     networks:
      - ansible
 
@@ -63,6 +67,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/centos1:/home/ansible/code
     networks:
      - ansible
 
@@ -76,6 +81,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/centos2:/home/ansible/code
     networks:
      - ansible
 
@@ -89,6 +95,7 @@ services:
     volumes:
      - /sys/fs/cgroup:/sys/fs/cgroup:ro
      - ${ANSIBLE_HOME}/shared:/shared
+     - ${ANSIBLE_HOME}/centos3:/home/ansible/code
     networks:
      - ansible
 
