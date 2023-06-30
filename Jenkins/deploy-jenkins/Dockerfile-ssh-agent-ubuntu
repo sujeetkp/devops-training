@@ -16,6 +16,9 @@ RUN adduser --disabled-login --home /home/ansible --gecos "" ansible && \
 	echo 'ansible:Welcome@123' | chpasswd && \
 	usermod -aG sudo ansible
 
+# Update root PS1
+RUN sed -i 's/xterm\-color/xterm\-color\|\*\-256color/' /root/.bashrc
+
 # Configure SSHD
 RUN mkdir -p /var/run/sshd ; chmod -rx /var/run/sshd
 
@@ -57,7 +60,7 @@ RUN bash -c 'echo "pos ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "jenkins ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "ansible ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 
-RUN echo 'export PS1="[$(whoami)@$(hostname)]$ "' >> /etc/profile.d/custom_ps1.sh
+#RUN echo 'export PS1="[$(whoami)@$(hostname)]$ "' >> /etc/profile.d/custom_ps1.sh
 
 EXPOSE 22
 

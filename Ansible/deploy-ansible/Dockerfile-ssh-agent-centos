@@ -64,8 +64,9 @@ RUN bash -c 'echo "pos ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "jenkins ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 RUN bash -c 'echo "ansible ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)'
 
-RUN echo 'export PS1="[$(whoami)@$(hostname)]$ "' >> /etc/profile.d/custom_ps1.sh
+RUN echo 'export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$ "' > /etc/profile.d/custom_ps1.sh
 
 EXPOSE 22
 
 CMD ["/usr/sbin/init"]
+

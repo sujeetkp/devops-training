@@ -5,3 +5,7 @@ ssh-copy-id -i ~/keys/id_rsa.pub user@77.134.54.101 -p 6576   # Default port is 
 ssh -i ansible@<hostname>    # ${HOME}/.ssh/id_rsa
 ssh -i <path_to_private_key>ansible@<hostname>
 ssh -oStrictHostKeyChecking=false ansible@ubuntu2
+
+############
+
+ansible --version
