@@ -9,3 +9,27 @@ ssh -oStrictHostKeyChecking=false ansible@ubuntu2
 ############
 
 ansible --version
+
+ansible centos1 -m ping
+ansible centos -m ping
+ansible ubuntu -m ping
+ansible all -m ping
+
+ansible all -m command -a 'id'
+ansible all -m command -a 'id' -o
+
+ansible all -m file -a 'path=/tmp/first.txt state=touch'
+ansible all -m file -a 'path=/tmp/templates state=directory'
+
+ansible centos,ubuntu -m copy -a 'src=/home/ansible/code/config dest=/tmp/config'
+
+##############
+
+Ansible Color Code -
+
+GREEN - No Change but SUCCESS
+RED - FAILURE
+YELLOW/AMBER - CHANGED SUCCESSFULLY
+
+#############
+
