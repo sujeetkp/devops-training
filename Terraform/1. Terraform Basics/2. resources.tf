@@ -1,38 +1,22 @@
-# Terraform Block
-terraform {
-  required_version = "<=2.0.0"
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.61.0"
-    }
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
-    }
-  }
-}
 
-# Provider Block
-provider "azurerm" {
- features {}          
-}
-
-
-// depends_on and count
 resource "azurerm_resource_group" "my_first_rg" {
-  #count = 3
+
   #depends_on = [ random_string.myrandom ]
-  #name     = "training_rg-${random_string.myrandom.id}"
-  #name     = "training_rg-${count.index}"
-  name     = "training_rg"
+
+  #name     = "demo_rg-${random_string.myrandom.id}"
+  
+  count = 3
+  name  = "training_${count.index}-rg"
+
+  #name     = "demo_rg"
   location = "West US"
 
   tags = {
-    environment = "Dev"
+    environment = "Tech"
   }
 }
 
+/*
 # Random String Resource
 resource "random_string" "myrandom" {
   length = 6
@@ -40,7 +24,7 @@ resource "random_string" "myrandom" {
   special = false
   numeric = false   
 }
-
+*/
 
 /*
 //for_each wih set
