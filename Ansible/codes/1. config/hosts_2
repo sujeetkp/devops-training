@@ -2,12 +2,12 @@
 centos-c  ansible_connection=local
 
 [centos]
-centos1
-centos2
-centos3
+centos1   ansible_host=192.168.21.2  ansible_port=3301
+centos2   ansible_host=myhost.example.com
+centos3   ansible_port=3301  # Port 3301
 
 [ubuntu]
-ubuntu1  
+ubuntu1  # Port 22
 ubuntu2
 ubuntu3
 
