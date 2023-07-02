@@ -7,7 +7,7 @@ tags = {
 /*
 departments = ["hr","tech","admin"]
 count = 3
-enable_rg = true
+enable_upper = true
 */
 
 /*

@@ -26,8 +26,8 @@ variable "count" {
   type = number
 }
 
-variable "enable_rg" {
-  description = "Enabling Resource Group (true/false)"
+variable "enable_upper" {
+  description = "Enabling upper (true/false)"
   type = bool
 }
 
@@ -37,8 +37,8 @@ variable "location" {
   default = "East US"
 
   validation {
-    condition = "<Condition>"
-    error_message = "%s is not"
+    condition = contains(["East US", "West US", "East US2"], var.location)
+    error_message = "%s is not a valid azure region"
   }
 }
 */

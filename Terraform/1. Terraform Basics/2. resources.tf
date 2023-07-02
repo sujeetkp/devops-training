@@ -1,4 +1,5 @@
 
+/*
 resource "azurerm_resource_group" "my_first_rg" {
 
   #depends_on = [ random_string.myrandom ]
@@ -27,24 +28,37 @@ resource "random_string" "myrandom" {
 */
 
 /*
+// A Set
+// 1. Can't have duplicate elements
+// 2. you cant't access elements using indexes
 //for_each wih set
 locals {
-  departments = ["hr","tech","admin"]
+  departments = ["hr","tech","admin"]    # by default it is a list
+  tags = {
+    environment = "Dev"
+    cost_center = "value"
+  }
   environment = "dev"
   business_unit = "banking"
   department = "hr"
-  resource_prefix = "${environment}-${business_unit}-${department}"
+  resource_prefix = "${local.environment}-${local.business_unit}-${local.department}"
 }
 
 resource "azurerm_resource_group" "my_first_rg" {
   for_each = toset(local.departments)
   name     = "${local.resource_prefix}-training_rg-${each.key}"
+  #name     = "training_rg-${each.key}"
   location = "West US"
 
-  tags = {
-    environment = "Dev"
-    department  = "${each.value}"
-  }
+  tags = merge(local.tags,{department  = "${each.value}"})
+}
+
+resource "azurerm_resource_group" "my_second_rg" {
+  name     = "${local.resource_prefix}-demo_rg"
+  #name     = "training_rg-${each.key}"
+  location = "West US"
+
+  tags = local.tags
 }
 */
 
@@ -73,17 +87,13 @@ resource "azurerm_resource_group" "my_first_rg" {
 /*
 // Life cycles
 resource "azurerm_resource_group" "my_first_rg" {
-  #count = 3
-  #depends_on = [ random_string.myrandom ]
-  #name     = "training_rg-${random_string.myrandom.id}"
-  #name     = "training_rg-${count.index}"
-  name     = "training_rg"
+  name     = "training_rg_11"
   location = "West US"
 
   lifecycle {
     create_before_destroy = true
-    prevent_destroy = true
-    ignore_changes = [ tags ]
+    #prevent_destroy = true
+    #ignore_changes = [ tags ]
   }
 
   tags = {

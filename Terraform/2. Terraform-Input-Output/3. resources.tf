@@ -1,30 +1,11 @@
-# Terraform Block
-terraform {
-  required_version = "<=2.0.0"
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "3.61.0"
-    }
-    random = {
-      source = "hashicorp/random"
-      version = "3.5.1"
-    }
-  }
-}
-
-# Provider Block
-provider "azurerm" {
- features {}          
-}
-
-
+/*
 resource "azurerm_resource_group" "my_first_rg" {
   name     = "${var.resource_group_name}"
   location = var.location
 
   tags = var.tags
 }
+*/
 
 /*
 resource "azurerm_resource_group" "my_first_rg" {
@@ -67,6 +48,7 @@ resource "azurerm_resource_group" "my_first_rg" {
 }
 */
 
+/*
 resource "azurerm_virtual_network" "my_vnet" {
   name                = "my-vnet"
   location            = azurerm_resource_group.my_first_rg.location
@@ -89,3 +71,4 @@ resource "azurerm_virtual_network" "my_vnet" {
     environment = "Production"
   }
 }
+*/

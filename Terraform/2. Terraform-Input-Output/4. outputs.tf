@@ -1,4 +1,9 @@
 /*
+output "resource_group_id" {
+  value = azurerm_resource_group.my_first_rg.id
+}
+*/
+/*
 //Splat Operator
 output "resource_group_id" {
   value = azurerm_resource_group.my_first_rg[*].id
@@ -20,6 +25,7 @@ output "resource_group_details" {
 }
 */
 
+/*
 //for_each - Loop in to collect map and list
 output "resource_group_details" {
   value = { for key, rg in azurerm_resource_group.my_first_rg: key => rg.id }
@@ -30,3 +36,4 @@ output "resource_group_ids" {
   value = [ for rg in azurerm_resource_group.my_first_rg: rg.id ]
   #sensitive = true
 }
+*/

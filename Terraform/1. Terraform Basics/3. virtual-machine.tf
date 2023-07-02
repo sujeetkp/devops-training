@@ -70,4 +70,42 @@ resource "azurerm_network_interface" "vm_nic" {
     public_ip_address_id          = azurerm_public_ip.vm_publicip.id 
   }
 }
+
+resource "azurerm_subnet_network_security_group_association" "vm_subnet_nsg_associate" {
+  depends_on = [ azurerm_network_security_rule.vm_nsg_rule_inbound]    
+  subnet_id                 = azurerm_subnet.vm_subnet.id
+  network_security_group_id = azurerm_network_security_group.vm_subnet_nsg.id
+}
+
+# Resource-4: Create NSG Rules
+## Locals Block for Security Rules
+locals {
+  vm_inbound_ports_map = {
+    "100" : "22", # If the key starts with a number, you must use the colon syntax ":" instead of "="
+    "110" : "3389"
+  } 
+}
+## NSG Inbound Rule for Bastion / Management Subnets
+resource "azurerm_network_security_rule" "vm_nsg_rule_inbound" {
+  for_each = local.vm_inbound_ports_map
+  name                        = "Rule-Port-${each.value}"
+  priority                    = each.key
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = each.value 
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = azurerm_resource_group.vm_rg.name
+  network_security_group_name = azurerm_network_security_group.vm_subnet_nsg.name
+}
+
+output "vm_private_ip" {
+  value = azurerm_linux_virtual_machine.vm_linux.private_ip_address
+}
+
+output "vm_public_ip" {
+  value = azurerm_linux_virtual_machine.vm_linux.public_ip_address
+}
 */
