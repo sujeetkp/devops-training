@@ -27,6 +27,34 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
     version   = "latest"
   }
 
+  connection {
+    type     = "ssh"
+    user     = "azureuser"
+    password = "Welcome@123"
+    host     = self.public_ip_address
+  }
+
+  provisioner "file" {
+    source = "<local_path>"
+    destination = "<remote_path>"
+  }
+  
+  provisioner "remote-exec" {
+    
+    #connection {
+    #  type     = "ssh"
+    #  user     = "azureuser"
+    #  password = "Welcome@123"
+    #  host     = self.public_ip_address
+    #}
+    #script = "/path/to/script"
+    #scripts = [ "", "", "" ]
+    inline = [
+      "sudo systemctl start docker",   # Assuming docker is already installed
+      "sudo echo 'This is from provisioner' > /tmp/info.txt",
+      "sudo bash /tmp/script.sh"
+    ]
+  }
 }
 
 resource "azurerm_resource_group" "vm_rg" {

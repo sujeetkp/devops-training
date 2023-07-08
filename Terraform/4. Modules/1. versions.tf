@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">=1.0.0"
+  required_version = "<=2.0.0"
   required_providers {
     azurerm = {
       source = "hashicorp/azurerm"
@@ -18,7 +18,7 @@ terraform {
     key                  = "demo.tfstate"
   }
   */
-  backend "azurerm" {}
+  #backend "azurerm" {}
 }
 
 # Provider Block

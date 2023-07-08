@@ -1,5 +1,5 @@
 data "azurerm_resource_group" "rg" {
-  name = "training_rg"
+  name = "Training"
 }
 
 resource "azurerm_virtual_network" "my_vnet" {

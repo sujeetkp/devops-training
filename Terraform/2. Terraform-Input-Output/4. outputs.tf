@@ -3,8 +3,9 @@ output "resource_group_id" {
   value = azurerm_resource_group.my_first_rg.id
 }
 */
+
 /*
-//Splat Operator
+//Splat Operator - Only for Count
 output "resource_group_id" {
   value = azurerm_resource_group.my_first_rg[*].id
   #sensitive = true
@@ -17,13 +18,14 @@ output "resource_group_id" {
 }
 */
 
-/*
+
 //Count - Loop in to collect map
 output "resource_group_details" {
   value = { for count, rg in azurerm_resource_group.my_first_rg: count => rg.id }
+  #value = [ for rg in azurerm_resource_group.my_first_rg: rg.id ]
   #sensitive = true
 }
-*/
+
 
 /*
 //for_each - Loop in to collect map and list

@@ -46,7 +46,7 @@ resource "azurerm_resource_group" "my_first_rg" {
     department  = "${each.value}"
   }
 }
-*/
+
 
 /*
 resource "azurerm_virtual_network" "my_vnet" {
