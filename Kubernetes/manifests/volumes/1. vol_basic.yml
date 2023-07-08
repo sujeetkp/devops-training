@@ -33,6 +33,10 @@ spec:
     volumeMounts:
       - name: azure
         mountPath: /azure-disk
+   #     subPath: app
+   #   - name: azure
+   #     mountPath: /data
+   #     subPath: data
   volumes:
     - name: azure
       persistentVolumeClaim:

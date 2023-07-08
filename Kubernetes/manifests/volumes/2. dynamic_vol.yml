@@ -5,13 +5,13 @@ kind: StorageClass
 metadata:
   name: premium-disk-cm
 parameters:
-  skuname: Premium_LRS
+  skuname: Premium_LRS  # Standard_LRS
   kind: Managed
   #subscriptionID: 29f4fd39-55c5-46f0-9e75-d9d16df4f544
   #resourceGroup: disks-k8s
-provisioner: kubernetes.io/azure-disk
+provisioner: kubernetes.io/azure-disk  # disk.csi.azure.com, file.csi.azure.com
 reclaimPolicy: Retain
-volumeBindingMode: Immediate
+volumeBindingMode: Immediate  # WaitForFirstConsumer
 allowVolumeExpansion: true
 
 ---

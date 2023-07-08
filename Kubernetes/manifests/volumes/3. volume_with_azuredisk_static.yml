@@ -4,18 +4,24 @@ metadata:
   name: pv-azuredisk
 spec:
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
+  storageClassName: manual # Dummy name
   volumeMode: Filesystem
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  azureDisk:
+  azureDisk: # Legacy
     cachingMode: ReadWrite
     diskName: demo
     diskURI: /subscriptions/29f4fd39-55c5-46f0-9e75-d9d16df4f544/resourceGroups/MC_Training_demo_centralindia/providers/Microsoft.Compute/disks/demo
     kind: Managed
     readOnly: false
+  #csi:
+  #  driver: disk.csi.azure.com
+  #  readOnly: false
+  #  volumeHandle: /subscriptions/<subscriptionID>/resourceGroups/MC_myAKSCluster_myAKSCluster_eastus/providers/Microsoft.Compute/disks/myAKSDisk
+  #  volumeAttributes:
+  #    fsType: ext4
   claimRef:
     apiVersion: v1
     kind: PersistentVolumeClaim
