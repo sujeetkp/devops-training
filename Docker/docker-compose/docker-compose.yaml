@@ -9,7 +9,7 @@ services:
     networks:
       - net
     environment:
-      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_ROOT_PASSWORD: somewordpress # ${MYSQL_ROOT_PASSWD}
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
@@ -30,6 +30,7 @@ services:
 
 volumes:
   db_data:
+  #app_data:
 
 networks:
   net:
