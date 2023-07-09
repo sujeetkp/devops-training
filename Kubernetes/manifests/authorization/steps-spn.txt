@@ -1,0 +1,38 @@
+az ad sp create-for-rbac --name <name-of-spn> --role Reader --scopes <Scope>   # Note down the details on screen
+
+{
+  "appId": "<spn client id>",
+  "displayName": "myAKSAutomationServicePrincipal",
+  "name": "http://myAKSAutomationServicePrincipal",
+  "password": "<spn secret>",
+  "tenant": "<aad tenant id>"
+}
+
+az ad sp show --id <spn client id> --query "id"
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: sp-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: <service-principal-application-object-id>
+
+az login --service-principal --username <sp_client_id> --password <password> --tenant <tenant>
+
+// To pull the AKS credentials the user/group/SPN must have "Azure Kubernetes Service Cluster User Role" on the AKS Resource Group or the AKS resource itself.
+
+az aks get-credentials --resource-group Training --name demo
+
+kubelogin convert-kubeconfig -l spn
+
+export AAD_SERVICE_PRINCIPAL_CLIENT_ID=<spn client id>
+export AAD_SERVICE_PRINCIPAL_CLIENT_SECRET=<spn secret>
+
+k get nodes
+k get pods

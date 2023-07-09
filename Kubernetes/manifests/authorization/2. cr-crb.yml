@@ -1,44 +1,36 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  namespace: default
-  name: pod-reader
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: secret-reader
 rules:
-- apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"]
+- apiGroups: [""]
+  #
+  # at the HTTP level, the name of the resource for accessing Secret
+  # objects is "secrets"
+  resources: ["secrets"]
   verbs: ["get", "watch", "list"]
 
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
-# This role binding allows "jane" to read pods in the "default" namespace.
-# You need to already have a Role named "pod-reader" in that namespace.
-kind: RoleBinding
+# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
+kind: ClusterRoleBinding
 metadata:
-  name: read-pods
-  namespace: default
+  name: read-secrets-global  # cluster-admin
 subjects:
-# You can specify more than one "subject"
 - kind: User
-  name: jane # "name" is case sensitive
-  apiGroup: rbac.authorization.k8s.io
-- kind: User
-  name: sujeet # "name" is case sensitive
-  apiGroup: rbac.authorization.k8s.io
-- kind: User
-  name: rani # "name" is case sensitive
+  name: Dave@sumeetkp0201gmail.onmicrosoft.com   # Object ID from different tenant - 7bcc329e-88a9-4c45-bc97-6f363ee6f5a3
   apiGroup: rbac.authorization.k8s.io
 - kind: Group
-  name: admin # "name" is case sensitive
+  name: manager # Name is case sensitive # Object ID of AAD groups
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  # "roleRef" specifies the binding to a Role / ClusterRole
-  kind: Role #this must be Role or ClusterRole
-  name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
+  kind: ClusterRole
+  name: secret-reader
   apiGroup: rbac.authorization.k8s.io
 
 ---
-
 
 apiVersion: rbac.authorization.k8s.io/v1
 # This role binding allows "jane" to read pods in the "default" namespace.
@@ -57,6 +49,6 @@ subjects:
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   # "roleRef" specifies the binding to a Role / ClusterRole
-  kind: Role #this must be Role or ClusterRole
+  kind: ClusterRole #this must be Role or ClusterRole
   name: pod-reader # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
