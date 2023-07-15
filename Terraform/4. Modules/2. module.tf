@@ -24,8 +24,8 @@ module "my-nsg" {
 }
 */
 
-module "rg" {
-  source = "./modules/azurerm-nsg"
+module "my-rg" {
+  source = "./modules/azurerm-rg"
 
   resource_group_name = "Test"
   location = "Central US"
