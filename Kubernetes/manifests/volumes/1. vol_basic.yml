@@ -4,8 +4,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: pvc-azuredisk
   #namespace: <your_namespace_name>
+  #namespace: tech-1
 spec:
-  #storageClassName: "managed-csi"
+  #storageClassName: "managed-csi" 
+  #storageClassName: "managed-csi-premium"
   accessModes:
     - ReadWriteOnce
   resources:

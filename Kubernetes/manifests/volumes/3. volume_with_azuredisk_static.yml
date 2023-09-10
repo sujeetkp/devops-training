@@ -19,7 +19,7 @@ spec:
   #csi:
   #  driver: disk.csi.azure.com
   #  readOnly: false
-  #  volumeHandle: /subscriptions/<subscriptionID>/resourceGroups/MC_myAKSCluster_myAKSCluster_eastus/providers/Microsoft.Compute/disks/myAKSDisk
+  #  volumeHandle: /subscriptions/29f4fd39-55c5-46f0-9e75-d9d16df4f544/resourceGroups/MC_Training_demo_centralindia/providers/Microsoft.Compute/disks/demo
   #  volumeAttributes:
   #    fsType: ext4
   claimRef:

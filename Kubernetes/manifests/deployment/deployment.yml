@@ -4,20 +4,22 @@ metadata:
   name: nginx-deployment
   labels:
     app: nginx
-    deploy: first
+    platform: minikube
 spec:
   replicas: 3
   selector:
-    matchLabels:
+    matchLabels:   # Must be a subset of template.metadata.labels
       app: nginx
+      platform: minikube
   template:
     metadata:
       labels:
         app: nginx
-        version: "1.25.1"
+        version: "1.25.2"
+        platform: minikube
     spec:
       containers:
       - name: nginx
-        image: nginx:1.25.1
+        image: nginx:1.25.2
         ports:
         - containerPort: 80

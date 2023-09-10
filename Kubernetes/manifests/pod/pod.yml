@@ -6,7 +6,9 @@ metadata:
   #annotations: <Fill_In_Anootations>
   labels:
     app: nginx
-    version: "1.25.1"
+    version: "1.14.2"
+    env: dev
+    platform: minikube
 spec:
   containers:
   - name: nginx

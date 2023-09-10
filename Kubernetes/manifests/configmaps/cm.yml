@@ -10,6 +10,8 @@ data:
     color.good=purple
     color.bad=yellow
     allow.textmode=true  
+  backend.properties: |
+    allow.access=true
 
 ---
 
