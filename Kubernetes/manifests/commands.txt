@@ -6,6 +6,7 @@ kubectl apply -f <file_name>
 kuebctl delete -f <file_name>
 
 kubectl get pods
+kubectl get pods -n <namespace>
 kubectl get pods -o wide
 kubectl get pods --show-labels
 kubectl get pods -l app=nginx
@@ -14,6 +15,9 @@ kubectl logs -f <pod_name>
 kubectl logs -f -c <container_name> <pod_name>
 kubectl exec -ti <pod_name> -- bash
 kubectl exec -ti -c <container_name> <pod_name> -- bash
+
+kubectl get namespaces
+kubectl get storageclasses
 
 kubectl get deploy
 kubectl get svc
@@ -35,5 +39,7 @@ kubectl describe sc <sc_name>
 kubectlkubectl get cm
 kubectl describe cm <cm_name>
 
-kubectlkubectl get secrets
+kubectl get secrets
 kubectl describe secret <secret_name>
+
+kubectl get ingress
