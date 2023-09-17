@@ -27,7 +27,7 @@ spec:
     name: mypod
     resources:
       requests:   # For Scheduler - Helps to find a Node
-        cpu: 100m
+        cpu: 100m  #"0.1"
         memory: 128Mi
       limits:    # This is the upper limit. Resource usage can't go beyond this.
         cpu: 250m

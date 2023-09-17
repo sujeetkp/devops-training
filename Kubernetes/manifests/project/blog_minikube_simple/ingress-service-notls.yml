@@ -1,0 +1,34 @@
+# Ingress Object
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  # ingressClassName: nginx
+  rules:
+   - http:
+      paths:
+       - pathType: Prefix
+         path: /
+         backend:
+          service:
+            name: web
+            port: 
+              number: 5000
+
+
+# AzureLB(Public IP) --> Ingress Controller --> Ingress Object -->  Service(blog) --> Deploy - Frontend App(Blog)   --> Service(postgres) -->  Deploy - Postgres Database
+# Ingress Controller --> Install (Different for different k8s installations - EKS, AKS, GKE, minikube)
+# Ingress Object is a k8s object - You need to create in from yaml
+# Ingress Controller is going to read your ingress object and configure the paths/rules to serve the traffic.
+
+# People --> Machine --> Proxy (Whitelist/Blacklist/Reroute) --> Internet/Server
+# People <-- Machine <-- Reverse Proxy (Reroute) <-- Internet/Server
+
+# nginx is actually reverse proxy.
+# nginx --> application
+
+# nginx ingress controller --> Ingress Controller (Based on nginx application)
+# path based routing --> nginx application
