@@ -9,7 +9,7 @@ services:
      - ${CENTOSC_PORT_SSHD}:22
     privileged: true
     volumes:
-     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro   # cgroup (Control Group) - Helps Docker to control the CPU/Memory
      - ${ANSIBLE_HOME}/shared:/shared
      - ${ANSIBLE_HOME}/centos-c:/home/ansible/code
     networks:

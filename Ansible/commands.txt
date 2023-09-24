@@ -3,10 +3,24 @@ ssh-copy-id -i ~/keys/id_rsa.pub user@77.134.54.101 -p 6576   # Default port is 
 
 
 ssh -i ansible@<hostname>    # ${HOME}/.ssh/id_rsa
+ssh -i ansible@<hostname> -p <port>   # ${HOME}/.ssh/id_rsa
 ssh -i <path_to_private_key>ansible@<hostname>
 ssh -oStrictHostKeyChecking=false ansible@ubuntu2
 
 ############
+Start your ansible - (Make sure you run on linux host and with ansible user)
+
+git clone <github-repo-link>
+cd <HOME>/devops-training/Ansible/deploy-ansible
+
+mkdir ansible_home
+mkdir ansible_home/shared ansible_home/ubuntu1 ansible_home/ubuntu2 ansible_home/ubuntu3 ansible_home/centos1 ansible_home/centos2 ansible_home/centos3 
+
+source .env
+
+docker-compose up -d
+
+###########
 
 ansible --version
 
