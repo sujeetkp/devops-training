@@ -1,0 +1,25 @@
+---
+# tasks file for nginx
+- name: Configure a MOTD for CentOS
+  copy:
+    content: "{{ motd_centos }}"
+    dest: /etc/motd
+  notify: "MOTD Changed"
+  when: ansible_distribution == "CentOS"
+
+- name: Configure a MOTD for Ubuntu
+  copy:
+    content: "{{ motd_ubuntu }}"
+    dest: /etc/motd
+  notify: "MOTD Changed"
+  when: ansible_distribution == "Ubuntu"
+
+- name: "Install Nginx"
+  package:
+    name: nginx
+    state: latest
+
+- name: "Start Nginx"
+  service:
+    name: nginx
+    state: restarted

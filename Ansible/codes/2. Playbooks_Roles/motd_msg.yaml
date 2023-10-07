@@ -1,0 +1,16 @@
+---
+  - hosts: all
+    vars:
+      motd_centos: "Welcome to CentOS Linux - Ansible Rocks\n"
+      motd_ubuntu: "Welcome to Ubuntu Linux - Ansible Rocks\n"
+ 
+    tasks:
+      - name: Configure a MOTD
+        copy:
+          content: "{{ motd_centos }}"
+          dest: /etc/motd
+        when: ansible_distribution == "CentOS"
+
+      - name: Display hostvars
+        debug: 
+           msg: "{{ hostvars }}"

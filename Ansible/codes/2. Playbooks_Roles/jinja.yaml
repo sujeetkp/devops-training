@@ -1,0 +1,24 @@
+---
+  - hosts: all
+    vars:
+      motd_centos: "Welcome to CentOS Linux - Ansible Rocks\n"
+      motd_ubuntu: "Welcome to Ubuntu Linux - Ansible Rocks\n"
+ 
+    tasks:
+      - name: Configure a MOTD for CentOS
+        copy:
+          content: "{{ motd_centos }}"
+          dest: /etc/motd
+        notify: "MOTD Changed"
+      - name: Configure a MOTD for Ubuntu
+        copy:
+          content: "{{ motd_ubuntu }}"
+          dest: /etc/motd
+        notify: "MOTD Changed"
+    handlers:
+      - name: "MOTD Changed"
+        debug:
+          msg: "The MOTD was updated"
+
+# Jinja Templating - Called before your playbook execution.(Static Execution)
+# "When" is executed along with your playbook execution

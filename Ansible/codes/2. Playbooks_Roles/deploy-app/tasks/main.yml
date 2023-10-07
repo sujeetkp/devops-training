@@ -1,0 +1,13 @@
+---
+# tasks file for deploy-app
+- name: Deploy App
+  copy:
+    content: "Hello From Nginx"
+    dest: /usr/share/nginx/html/index.html
+  when: ansible_distribution == "CentOS"
+
+- name: Deploy App
+  copy:
+    content: "Hello From Nginx"
+    dest: /var/www/html/index.html
+  when: ansible_distribution == "Ubuntu"

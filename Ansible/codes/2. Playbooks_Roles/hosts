@@ -1,0 +1,15 @@
+[control]
+centos-c ansible_connection=local
+
+[ubuntu]
+ubuntu1  
+ubuntu2
+ubuntu3
+
+[centos]
+centos1  
+centos2 
+centos3
+
+[all:vars]
+ansible_become=true

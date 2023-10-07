@@ -1,0 +1,6 @@
+---
+# handlers file for nginx
+
+- name: "MOTD Changed"
+  debug:
+    msg: "The MOTD was updated"

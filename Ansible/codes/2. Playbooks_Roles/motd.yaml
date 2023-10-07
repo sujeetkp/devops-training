@@ -1,0 +1,33 @@
+---
+  - hosts: all
+    vars:
+      motd_centos: "Welcome to CentOS Linux - Ansible Rocks\n"
+      motd_ubuntu: "Welcome to Ubuntu Linux - Ansible Rocks\n"
+ 
+    tasks:
+      - name: Configure a MOTD for CentOS
+        copy:
+          content: "{{ motd_centos }}"
+          dest: /etc/motd
+        notify: "MOTD Changed"
+        when: ansible_distribution == "CentOS"
+      
+      - name: Configure a MOTD for Ubuntu
+        copy:
+          content: "{{ motd_ubuntu }}"
+          dest: /etc/motd
+        notify: "MOTD Changed"
+        when: ansible_distribution == "Ubuntu"
+
+    handlers:
+      - name: "MOTD Changed"
+        debug:
+          msg: "The MOTD was updated"
+
+# Handler Can only be executed only once, does not matter how many times it is called.
+# Handler is triggered only when there is a Changed Success (Yellow).
+# ansible-playbook motd.yaml -e 'motd_centos="Learning Ansible CentOS" motd_ubuntu="Learning Ansible CentOS"'
+# ansible-playbook motd.yaml -e @inputs.yml
+# inputs.yml -
+# motd_centos="Learning Ansible CentOS"
+# motd_ubuntu="Learning Ansible CentOS"

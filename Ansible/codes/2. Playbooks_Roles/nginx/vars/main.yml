@@ -1,0 +1,5 @@
+---
+# vars file for nginx
+
+motd_centos: "Welcome to CentOS Linux - Ansible Rocks\n"
+motd_ubuntu: "Welcome to Ubuntu Linux - Ansible Rocks\n"
